@@ -39,20 +39,28 @@ int main(void)
 	uint8_t readed = 1;
 	uint8_t errormsg[2] = {0xEE,0xBB};
 	
+	uint8_t data[10];
+	uint8_t size;
+	const float timeout = 2;
 	
 	while(1)
 	{
+		size = 10;
+		UART0.read_stream(size,data,timeout);
+		velki.forward(data,size,data);
+		UART0.send_stream(size,data);
 		
 		
-		if(velki.read_pressure(pressure))
-		pccom.send_msg(9,pressure);
-		else{
-			pccom.send_msg(2,errormsg);
-			pccom.send_msg(9,pressure);
-		}
-		do
-		{
-			pccom.read_msg(readed,msg2);
-		} while (msg2[0]!=0xAC);
+		
+// 		if(velki.read_pressure(pressure))
+// 		pccom.send_msg(9,pressure);
+// 		else{
+// 			pccom.send_msg(2,errormsg);
+// 			pccom.send_msg(9,pressure);
+// 		}
+// 		do
+// 		{
+// 			pccom.read_msg(readed,msg2);
+// 		} while (msg2[0]!=0xAC);
 	}
 }

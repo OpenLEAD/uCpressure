@@ -53,11 +53,12 @@ namespace Rosa{
 		
 		void enable(void) const;
 		
-		uint8_t read(bool wait = true, bool* status = NULL) const;
+		uint8_t read(bool* status = NULL) const;
 		bool read(float timeout_ms, uint8_t* data ) const;
-		void read(float timeout_ms, uint8_t& size , uint8_t* data) const;
+		void read_stream(uint8_t& size , uint8_t* data, float timeout_byte) const;
 		void flush(void) const;
 		void send(uint8_t data) const;
+		void send_stream(uint8_t size , uint8_t* data);
 		bool transmit_ongoing(void) const;
 		
 		void link(void (*f)(void)) const{config->interrupt=f;}

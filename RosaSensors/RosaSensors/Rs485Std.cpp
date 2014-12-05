@@ -18,8 +18,8 @@ namespace Rosa
 	void Rs485Std::send_msg( uint8_t data_length, uint8_t *msg )
 	{
 		tx_enable->set();
-		for (uint8_t i = 0 ; i < data_length ; i++)
-		uart->send(msg[i]);
+		
+		uart->send_stream(data_length,msg);
 		
 		while(uart->transmit_ongoing());
 		tx_enable->unset();
@@ -35,13 +35,12 @@ namespace Rosa
 			return false;
 		}
 		
-		uint8_t received_length = 1;
+		uint8_t max_length = data_length;
 		
-		for (uint8_t i = 1 ; i < data_length ; i++, received_length++)
-		if(!uart->read(byte_timeout,msg+i)){
-			data_length = received_length;
-			return false;
-		}
+		for ( data_length = 1 ; data_length < max_length ; data_length++)
+		if(!uart->read(byte_timeout,msg+data_length))
+		return false;
+		
 		
 		rx_enable->set();
 		

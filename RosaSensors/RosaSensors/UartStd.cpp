@@ -32,20 +32,11 @@ namespace Rosa{
 		/* Enable receiver and transmitter */
 		*(UCSRB) = (1<<RXEN) | (1<<TXEN);// | (1<<RXCIE);
 	}
-	uint8_t UartStd::read(bool wait, bool* status) const
+	uint8_t UartStd::read(bool* status) const
 	{
 		uint8_t readed,data;
 		
-		if (wait){
-			while (((readed=*(UCSRA)) & RX_COMPLETE )==0) continue;
-		}
-		else{
-			if (((readed=*(UCSRA)) & RX_COMPLETE)==0){
-				if (status != NULL)
-				*status = false;
-				return 0;
-			}
-		}
+		while (((readed=*(UCSRA)) & RX_COMPLETE )==0) continue;
 		
 		data = *(UDR);
 		
@@ -90,8 +81,15 @@ namespace Rosa{
 	return true;
 }
 
-void UartStd::read( float timeout_ms, uint8_t& size , uint8_t* data ) const
+void UartStd::read_stream( uint8_t& size , uint8_t* data, float timeout_byte) const
 {
+	uint8_t sizemax = size;
+	
+	data[0]=read();
+	
+	for(size = 1; i < sizemax; size++)
+	if(!read(timeout_byte,data+size))
+	break;
 	
 }
 
@@ -117,6 +115,13 @@ void UartStd::flush( void ) const
 	uint8_t dummy;
 	while (*UCSRA & RX_COMPLETE)
 	dummy = *UDR;
+}
+
+void UartStd::send_stream(uint8_t size , uint8_t* data)
+{
+	for(uint8_t i=0; i < size; i++)
+	send(data[i]);
+	
 }
 
 
