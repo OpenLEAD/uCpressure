@@ -36,7 +36,7 @@ namespace Rosa
 		
 		void send_msg(uint8_t data_length, uint8_t *msg);
 		uint8_t read_msg(uint8_t data_length, uint8_t *msg);
-		bool read_msg( uint8_t& data_length, uint8_t *msg, float byte_timeout, float response_timeout);
+		bool read_msg( uint8_t& data_length, uint8_t *msg, uint8_t byte_timeout, uint8_t response_timeout);
 		void flush(void){uart->flush();}
 		
 		

@@ -27,7 +27,7 @@ namespace Rosa {
 		send_msg(5,ReqPressure1);
 		
 		uint8_t received_size = 9;
-		if(!read_msg(received_size,pressure_msg,1.8,500))
+		if(!read_msg(received_size,pressure_msg,1.8,200))
 		if (received_size<5){
 			_delay_ms(1);
 			uint8_t badanswer[9]={0x12, 0xaa, 0xbb, received_size, 0x12, 0xaa, 0xbb, 0x00, 0x1B};
@@ -93,16 +93,16 @@ namespace Rosa {
 		return (initialized = true);
 	}
 
-bool Velki485::forward( uint8_t* command, uint8_t& size, uint8_t* response )
+bool Velki485::forward( uint8_t* command, uint8_t command_size, uint8_t* response, uint8_t& response_size )
 {
 	flush();
-	send_msg(size,command);
+	//send_msg(command_size,command);
 	
-	read_msg(size,response,1.8,500);
+	read_msg(response_size,response,2,200);
 	
 	_delay_ms(1);
 	
-	if(size==0)
+	if(response_size==0)
 		return false;
 		
 	return true; // NOT ALL FINE - CHECK STAT pressure_msg[6] BYTE!!

@@ -33,23 +33,30 @@ int main(void)
 	UART1.enable();
 	UART0.enable();
 	UartRosa pccom = UartRosa(UART1);
-	//Rs485Std profu = Rs485Std(UART0,TX_485_en1,RX_485_en1);
+	//Rs485Std siow = Rs485Std(UART0,TX_485_en1,RX_485_en1);
 	Velki485 velki = Velki485(UART0,TX_485_en1,RX_485_en1);
 	uint8_t pressure[9];
 	uint8_t readed = 1;
 	uint8_t errormsg[2] = {0xEE,0xBB};
 	
 	uint8_t data[10];
-	uint8_t size;
-	const float timeout = 2;
+	uint8_t command_size;
+	uint8_t response_size;
+	const uint8_t timeout = 2;
+	const uint8_t max_command_size = 10;
+	const uint8_t max_response_size = 10;
 	
 	while(1)
 	{
-		size = 10;
-		UART0.read_stream(size,data,timeout);
-		velki.forward(data,size,data);
-		UART0.send_stream(size,data);
+		command_size = max_command_size;
+		response_size = max_response_size;
 		
+		UART1.read_stream(command_size,data,timeout);
+		
+		if(velki.forward(data,command_size,data,response_size))
+		UART1.send_stream(response_size,data);
+		else
+		UART1.send_stream(2,errormsg);
 		
 		
 // 		if(velki.read_pressure(pressure))

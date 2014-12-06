@@ -28,7 +28,7 @@ namespace Rosa{
 		}
 		
 		bool read_pressure(uint8_t pressure_msg[9]);
-		bool forward(uint8_t* command, uint8_t& size, uint8_t* response);
+		bool forward( uint8_t* command, uint8_t command_size, uint8_t* response, uint8_t& response_size );
 		bool isinitialized(void){return initialized;}
 		bool initialize(void);
 		

@@ -52,12 +52,12 @@ namespace Rosa{
 		
 	}
 
-	bool UartStd::read( float timeout_ms, uint8_t* data) const
+	bool UartStd::read( uint8_t timeout_ms, uint8_t* data) const
 	{
 		uint8_t readed;
 		TCCR1B = 0; //set NO CLOCK TCCR1A=0, TCCR1B = 0b101;
 		TCNT1 =(uint16_t) 0; //Clear counter
-		OCR1A = (uint16_t) (timeout_ms/1000.0 * F_CPU/1024.0); //set number of cycles to compare (with PRESCALER 1024 set on 0b101<<CS0)
+		OCR1A = (uint16_t) (timeout_ms << 3); //set number of cycles to compare (with PRESCALER 1024 set on 0b101<<CS0) 8 = 7.8 = /1000f * F_CPU/1024f;
 		
 		if(TIFR1 & (1<<OCF1A))
 		TIFR1 = 1<<OCF1A; //Clear compare flag
@@ -81,13 +81,13 @@ namespace Rosa{
 	return true;
 }
 
-void UartStd::read_stream( uint8_t& size , uint8_t* data, float timeout_byte) const
+void UartStd::read_stream( uint8_t& size , uint8_t* data, uint8_t timeout_byte) const
 {
 	uint8_t sizemax = size;
 	
 	data[0]=read();
 	
-	for(size = 1; i < sizemax; size++)
+	for(size = 1; size < sizemax; size++)
 	if(!read(timeout_byte,data+size))
 	break;
 	
@@ -117,7 +117,7 @@ void UartStd::flush( void ) const
 	dummy = *UDR;
 }
 
-void UartStd::send_stream(uint8_t size , uint8_t* data)
+void UartStd::send_stream(uint8_t size , uint8_t* data) const
 {
 	for(uint8_t i=0; i < size; i++)
 	send(data[i]);
