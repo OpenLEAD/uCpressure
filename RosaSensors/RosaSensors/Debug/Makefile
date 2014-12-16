@@ -41,7 +41,6 @@ C_SRCS +=  \
 ../Rs485Std.cpp \
 ../UartRosa.cpp \
 ../UartStd.cpp \
-../RosaUtils.cpp \
 ../RosaSensors.cpp \
 ../Velki485.cpp
 
@@ -57,7 +56,6 @@ OutBit.o \
 Rs485Std.o \
 UartRosa.o \
 UartStd.o \
-RosaUtils.o \
 RosaSensors.o \
 Velki485.o
 
@@ -66,7 +64,6 @@ OutBit.o \
 Rs485Std.o \
 UartRosa.o \
 UartStd.o \
-RosaUtils.o \
 RosaSensors.o \
 Velki485.o
 
@@ -75,7 +72,6 @@ OutBit.d \
 Rs485Std.d \
 UartRosa.d \
 UartStd.d \
-RosaUtils.d \
 RosaSensors.d \
 Velki485.d
 
@@ -84,7 +80,6 @@ OutBit.d \
 Rs485Std.d \
 UartRosa.d \
 UartStd.d \
-RosaUtils.d \
 RosaSensors.d \
 Velki485.d
 
@@ -102,8 +97,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

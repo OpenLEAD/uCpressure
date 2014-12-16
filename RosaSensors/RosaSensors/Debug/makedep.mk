@@ -10,8 +10,6 @@ UartRosa.cpp
 
 UartStd.cpp
 
-RosaUtils.cpp
-
 RosaSensors.cpp
 
 Velki485.cpp

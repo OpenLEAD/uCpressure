@@ -96,9 +96,9 @@ namespace Rosa {
 bool Velki485::forward( uint8_t* command, uint8_t command_size, uint8_t* response, uint8_t& response_size )
 {
 	flush();
-	//send_msg(command_size,command);
+	send_msg(command_size,command);
 	
-	read_msg(response_size,response,2,200);
+	read_msg(response_size,response,2,100);
 	
 	_delay_ms(1);
 	

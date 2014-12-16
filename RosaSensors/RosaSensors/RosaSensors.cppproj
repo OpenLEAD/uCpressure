@@ -43,12 +43,12 @@
       <ToolOptions>
         <InterfaceProperties>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
-          <IspClock>400000</IspClock>
+          <IspClock>64000</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolNumber>0000B0039036</ToolNumber>
+      <ToolNumber>0000B0039102</ToolNumber>
       <ToolName>AVRISP mkII</ToolName>
     </com_atmel_avrdbg_tool_ispmk2>
     <preserveEEPROM>true</preserveEEPROM>
@@ -155,9 +155,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UartStd.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="RosaUtils.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RosaUtils.h">

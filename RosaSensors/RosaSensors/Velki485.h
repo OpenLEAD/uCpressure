@@ -21,9 +21,10 @@ namespace Rosa{
 		
 		//functions
 		public:
-		Velki485(const UartStd& uart485, OutBit& tx_enable_485, OutBit& rx_enable_485):
+		Velki485(const UartStd& uart485, OutBit& tx_enable_485, OutBit& rx_enable_485, bool init = true):
 		Rs485Std(uart485,tx_enable_485,rx_enable_485), initialized(false)
 		{
+			if(init)
 			initialize();
 		}
 		

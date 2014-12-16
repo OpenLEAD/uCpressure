@@ -117,13 +117,6 @@ void UartStd::flush( void ) const
 	dummy = *UDR;
 }
 
-void UartStd::send_stream(uint8_t size , uint8_t* data) const
-{
-	for(uint8_t i=0; i < size; i++)
-	send(data[i]);
-	
-}
-
 
 
 }

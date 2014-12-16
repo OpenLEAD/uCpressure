@@ -10,6 +10,18 @@
 #define UARTSTD_H_
 #include "RosaUtils.h"
 
+//SOME DEFINITIONS*************************************************************************************************************
+#define OVR 3
+#define FRAMING_ERROR (1<<FE)
+#define PARITY_ERROR (1<<UPE)
+#define DATA_OVERRUN (1<<OVR)
+#define DATA_REGISTER_EMPTY (1<<UDRE)
+#define RX_COMPLETE (1<<RXC)
+#define DATA_REGISTER_EMPTY1 (1<<UDRE1)
+#define DATA_REGISTER_EMPTY0 (1<<UDRE0)
+#define RX_COMPLETE0 (1<<RXC0)
+#define RX_COMPLETE1 (1<<RXC1)
+
 /*******************************/
 namespace Rosa{
 	struct UartConfig{
@@ -41,13 +53,13 @@ namespace Rosa{
 		UBRR(uart_UBRR),
 		UDR(uart_UDR){
 			config = (UartConfig*) malloc(sizeof(UartConfig));
-			config->baud = 250000;
+			config->baud = 9600;
 			config->parity = false;
 			config->stopbit = 0;
 			config->interrupt = NULL;
 		}
 		
-		void set_baud(uint8_t uart_baud) const{config->baud=uart_baud;} //não muda o baud de um porta já ativa
+		void set_baud(uint32_t uart_baud) const{config->baud=uart_baud;} //não muda o baud de um porta já ativa
 		uint8_t get_baud(void) const{return config->baud;}
 		
 		void enable(void) const;
@@ -57,7 +69,7 @@ namespace Rosa{
 		void read_stream(uint8_t& size , uint8_t* data, uint8_t timeout_byte) const;
 		void flush(void) const;
 		void send(uint8_t data) const;
-		void send_stream(uint8_t size , uint8_t* data) const;
+		void send_stream(uint8_t size , uint8_t* data) const{ for(uint8_t i=0; i < size; i++) send(data[i]);}
 		bool transmit_ongoing(void) const;
 		
 		void link(void (*f)(void)) const{config->interrupt=f;}
