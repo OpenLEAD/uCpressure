@@ -15,7 +15,6 @@
 #define ERRO_GETMSG_GETTING_EOT	    0xFF
 
 //******************************************************************************************************************************
-#define BLUE
 
 #include <avr/io.h>
 #include "OutBit.h"
@@ -57,7 +56,7 @@ int main(void)
 	uint8_t pressuredata[10];
 	uint8_t command_size;
 	uint8_t response_size;
-	const uint8_t timeout = 10;
+	const uint8_t timeout = 5;
 	const uint8_t max_command_size = 10;
 	const uint8_t max_response_size = 10;
 	
@@ -71,6 +70,13 @@ int main(void)
 		
 		if(velki.forward(pcdata,command_size,pressuredata,response_size))
 		UART1.send_stream(response_size,pressuredata);
+// 		else{
+// 			uint8_t timeoutanswer[9]={0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb};
+// 			timeoutanswer[0]=0xaa;
+// 			timeoutanswer[1]=command_size;
+// 			memcpy(timeoutanswer+2,pcdata,command_size>7? 7 : command_size);
+// 			UART1.send_stream(9,timeoutanswer);
+// 		}
 		
 	}
 }
