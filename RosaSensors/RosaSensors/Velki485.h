@@ -24,6 +24,8 @@ namespace Rosa{
 		Velki485(const UartStd& uart485, OutBit& tx_enable_485, OutBit& rx_enable_485, bool init = true):
 		Rs485Std(uart485,tx_enable_485,rx_enable_485), initialized(false)
 		{
+			tx_enable_485.unset();
+			rx_enable_485.set();
 			if(init)
 			initialize();
 		}

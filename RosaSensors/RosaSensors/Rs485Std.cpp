@@ -32,15 +32,17 @@ namespace Rosa
 		
 		if(!uart->read(response_timeout,msg)){
 			data_length=0;
+			rx_enable->set();
 			return false;
 		}
 		
 		uint8_t max_length = data_length;
 		
 		for ( data_length = 1 ; data_length < max_length ; data_length++)
-		if(!uart->read(byte_timeout,msg+data_length))
-		return false;
-		
+		if(!uart->read(byte_timeout,msg+data_length)){
+			rx_enable->set();
+			return false;
+		}
 		
 		rx_enable->set();
 		
