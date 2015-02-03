@@ -26,22 +26,12 @@ int main(void)
 	UART1.enable();
 	UART0.enable();
 	
-	#ifdef BLUE
-		OutBit EthRelay(PORTA,0), Reset(PORTC,6), InductiveLeftRelay(PORTA,7),
-		InductiveRightRelay(PORTA,6), InclinometerRelay(PORTC,0), PressureRelay(PORTC,2), TX_485_en1(PORTC,4);
+	OutBit RX_485_Pressure(PORTC,0,true), TX_485_Pressure(PORTC,1,false),
+			RX_485_Seaking(PORTC,2,true), TX_485_Seaking(PORTC,3,false),
+			RX_485_PTU(PORTC,4,true), TX_485_PTU(PORTC,5,false),
+			RX_485_Base(PORTC,6,true), TX_485_Base(PORTC,7,false);
 	
-		PressureRelay.unset();
-		InclinometerRelay.unset();
-		InductiveRightRelay.unset();
-		InductiveLeftRelay.unset();
-		EthRelay.unset();
-		Reset.unset();
-	#else
-		OutBit TX_485_en1(PORTA,4);
-	#endif
-	
-	OutBit RX_485_en1(PORTC,5);
-	Velki485 velki = Velki485(UART0,TX_485_en1,RX_485_en1);
+	Velki485 velki = Velki485(UART0,TX_485_Pressure,RX_485_Pressure);
 	
 	uint8_t pcdata[10];
 	uint8_t pressuredata[10];
