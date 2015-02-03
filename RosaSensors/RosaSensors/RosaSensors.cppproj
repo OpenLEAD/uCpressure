@@ -43,7 +43,7 @@
       <ToolOptions>
         <InterfaceProperties>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
-          <IspClock>64000</IspClock>
+          <IspClock>125000</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
@@ -157,7 +157,7 @@
     <Compile Include="UartStd.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RosaUtils.h">
+    <Compile Include="RosaDefines.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RosaSensors.cpp">

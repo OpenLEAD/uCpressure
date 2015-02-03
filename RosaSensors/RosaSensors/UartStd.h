@@ -8,7 +8,7 @@
 
 #ifndef UARTSTD_H_
 #define UARTSTD_H_
-#include "RosaUtils.h"
+#include "RosaDefines.h"
 
 //SOME DEFINITIONS*************************************************************************************************************
 #define OVR 3
