@@ -19,11 +19,11 @@ class OutBit{
 	public:
 	OutBit(volatile uint8_t &port, char bit, bool initial = true ): pt(&port), wbit(bit) {
 		if(initial)
-		*pt |= 1<<wbit;
+		set();
 		else
-		*pt &= ~(1<<wbit);
+		unset();
 		
-		*(pt - 1) |= 1<<wbit;
+		*(pt - 1) |= 1<<wbit; //Set Output Bit
 	};
 	
 	
