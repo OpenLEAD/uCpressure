@@ -14,6 +14,8 @@
 #include <string.h>
 using namespace Rosa;
 
+#define INDUTIVOS
+
 int main(void)
 {
 	
@@ -26,10 +28,17 @@ int main(void)
 	UART1.enable();
 	UART0.enable();
 	
+	#ifdef INDUTIVOS
+	OutBit RX_485_Pressure(PORTA,7,true), TX_485_Pressure(PORTA,4,false);
+	#endif
+	
+	#ifdef SONAR
 	OutBit RX_485_Pressure(PORTC,0,true), TX_485_Pressure(PORTC,1,false),
 			RX_485_Seaking(PORTC,2,true), TX_485_Seaking(PORTC,3,false),
 			RX_485_PTU(PORTC,4,true), TX_485_PTU(PORTC,5,false),
 			RX_485_Base(PORTC,6,true), TX_485_Base(PORTC,7,false);
+	#endif
+	
 	
 	Velki485 velki = Velki485(UART0,TX_485_Pressure,RX_485_Pressure);
 	
@@ -51,13 +60,13 @@ int main(void)
 		
 		if(velki.forward(pcdata,command_size,pressuredata,response_size))
 		UART1.send_stream(response_size,pressuredata);
-// 		else{
-// 			uint8_t timeoutanswer[9]={0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb};
-// 			timeoutanswer[0]=0xaa;
-// 			timeoutanswer[1]=command_size;
-// 			memcpy(timeoutanswer+2,pcdata,command_size>7? 7 : command_size);
-// 			UART1.send_stream(9,timeoutanswer);
-// 		}
+ 		else{
+ 			uint8_t timeoutanswer[9]={0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb};
+ 			timeoutanswer[0]=0xaa;
+ 			timeoutanswer[1]=command_size;
+ 			memcpy(timeoutanswer+2,pcdata,command_size>7? 7 : command_size);
+ 			UART1.send_stream(9,timeoutanswer);
+ 		}
 		
 	}
 }
